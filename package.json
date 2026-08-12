@@ -1,6 +1,6 @@
 {
   "name": "@kippli/common",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Shared contracts, NestJS building blocks, and the internal service-to-service HTTP client for the Kippli apps (one, mykippli, halo).",
   "license": "UNLICENSED",
   "type": "commonjs",
@@ -22,6 +22,13 @@
     "./http": {
       "types": "./dist/http/index.d.ts",
       "default": "./dist/http/index.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "contracts": ["./dist/contracts/index.d.ts"],
+      "nest": ["./dist/nest/index.d.ts"],
+      "http": ["./dist/http/index.d.ts"]
     }
   },
   "files": [
