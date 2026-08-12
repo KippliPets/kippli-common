@@ -1,6 +1,6 @@
 {
   "name": "@kippli/common",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "Shared contracts, NestJS building blocks, and the internal service-to-service HTTP client for the Kippli apps (one, mykippli, halo).",
   "license": "UNLICENSED",
   "type": "commonjs",
