@@ -8,13 +8,13 @@ Shared building blocks for the Kippli apps (`one`, `mykippli`, `halo`) — the c
 
 ## Install
 
-Consume it straight from GitHub (no registry needed):
+Consume it straight from GitHub — no registry, no version to bump. Track the default branch:
 
 ```bash
 npm install github:<owner>/kippli-common
-# or pin a tag/commit:
-npm install github:<owner>/kippli-common#v0.1.0
 ```
+
+The package is intentionally **unversioned** (`version` stays `0.0.0`); the git ref is the single source of truth. Your app's committed `package-lock.json` pins the exact commit SHA, so `npm ci` stays reproducible even though the spec tracks the branch. To pull a newer build after it lands on the default branch, run `npm update @kippli/common`.
 
 `prepare` builds the package on install, so `dist/` is produced automatically.
 
@@ -91,4 +91,4 @@ npm run typecheck  # tsc --noEmit
 
 ## Versioning
 
-Bump `version` in `package.json` and tag the commit (`git tag v0.1.1`) so consumers can pin `#v0.1.1`.
+This package is **intentionally unversioned** — `version` stays `0.0.0` and is never bumped. It's consumed by git ref (the default branch), so the commit SHA recorded in each consumer's `package-lock.json` is the real version pin. To ship a change: merge to the default branch, then run `npm update @kippli/common` in each consuming app to advance its locked SHA. No tags, no semver bumps.

@@ -5,7 +5,20 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
+import { createHash, timingSafeEqual } from 'node:crypto';
 import type { HttpRequestLike } from './http-types';
+
+/**
+ * Constant-time secret comparison. Both sides are hashed first so
+ * `timingSafeEqual` always gets two equal-length buffers and neither the
+ * secret's length nor its bytes leak through response timing.
+ */
+function secretMatches(presented: string, expected: string): boolean {
+  return timingSafeEqual(
+    createHash('sha256').update(presented).digest(),
+    createHash('sha256').update(expected).digest(),
+  );
+}
 
 /**
  * DI token for the internal-service secret resolver. Provide it in each app so
@@ -48,7 +61,9 @@ export class InternalSecretGuard implements CanActivate {
       );
     }
     const request = context.switchToHttp().getRequest<HttpRequestLike>();
-    if (request.headers['x-internal-secret'] !== secret) {
+    const header = request.headers['x-internal-secret'];
+    const presented = Array.isArray(header) ? header[0] : header;
+    if (!presented || !secretMatches(presented, secret)) {
       throw new UnauthorizedException('Invalid internal service secret');
     }
     return true;
