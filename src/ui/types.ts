@@ -13,7 +13,7 @@ export interface SwitcherApp {
 export interface NavItem {
   label: string;
   href: string;
-  icon: IconName;
+  icon: IconName | (string & {});
   exact?: boolean;
 }
 

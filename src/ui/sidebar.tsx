@@ -24,7 +24,7 @@ export function Sidebar({
   Link: ShellLink;
 }) {
   return (
-    <aside className="w-60 shrink-0 overflow-y-auto border-r border-zinc-200 bg-white">
+    <aside className="w-64 shrink-0 overflow-y-auto border-r border-zinc-200 bg-white">
       <nav className="px-3 py-4">
         {groups.map((group) => (
           <div key={group.title} className="mb-5">

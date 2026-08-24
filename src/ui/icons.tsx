@@ -31,7 +31,21 @@ export type IconName =
   | "syringe"
   | "bowl"
   | "grip"
-  | "chevron-down";
+  | "chevron-down"
+  // Superset additions (shipyard, vault, user-menu):
+  | "award"
+  | "box"
+  | "heart"
+  | "inbox"
+  | "scroll"
+  | "logout"
+  | "ellipsis"
+  | "download"
+  | "clinic"
+  | "handshake"
+  | "layers"
+  | "pen"
+  | "wand";
 
 const ICONS: Record<IconName, ReactNode> = {
   grip: (
@@ -217,13 +231,96 @@ const ICONS: Record<IconName, ReactNode> = {
     </>
   ),
   "chevron-down": <polyline points="6 9 12 15 18 9" />,
+  award: (
+    <>
+      <circle cx="12" cy="8" r="6" />
+      <path d="M8.21 13.89 7 22l5-3 5 3-1.21-8.11" />
+    </>
+  ),
+  box: (
+    <>
+      <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
+      <path d="m3.3 7 8.7 5 8.7-5" />
+      <path d="M12 22V12" />
+    </>
+  ),
+  heart: (
+    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z" />
+  ),
+  inbox: (
+    <>
+      <polyline points="22 12 16 12 14 15 10 15 8 12 2 12" />
+      <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" />
+    </>
+  ),
+  scroll: (
+    <>
+      <path d="M8 21h12a2 2 0 0 0 2-2v-2H10v2a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v3h4" />
+      <path d="M19 17V5a2 2 0 0 0-2-2H4" />
+    </>
+  ),
+  logout: (
+    <>
+      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+      <polyline points="16 17 21 12 16 7" />
+      <line x1="21" y1="12" x2="9" y2="12" />
+    </>
+  ),
+  ellipsis: (
+    <>
+      <circle cx="12" cy="12" r="1" />
+      <circle cx="19" cy="12" r="1" />
+      <circle cx="5" cy="12" r="1" />
+    </>
+  ),
+  download: (
+    <>
+      <path d="M12 3v12" />
+      <path d="m7 10 5 5 5-5" />
+      <path d="M5 21h14" />
+    </>
+  ),
+  clinic: (
+    <>
+      <rect x="3" y="7" width="18" height="14" rx="1" />
+      <path d="M12 3v4" />
+      <path d="M10 13h4" />
+      <path d="M12 11v4" />
+    </>
+  ),
+  handshake: (
+    <>
+      <path d="M6 11 3.5 8.5a2.12 2.12 0 0 1 3-3L12 11" />
+      <path d="m12 11 5.5-5.5a2.12 2.12 0 0 1 3 3L18 13" />
+      <path d="m8 13 2 2a2 2 0 0 0 3 0l4-4" />
+    </>
+  ),
+  layers: (
+    <>
+      <polygon points="12 2 2 7 12 12 22 7 12 2" />
+      <polyline points="2 17 12 22 22 17" />
+      <polyline points="2 12 12 17 22 12" />
+    </>
+  ),
+  pen: (
+    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+  ),
+  wand: (
+    <>
+      <path d="m3 21 15-15" />
+      <path d="m15 6 3 3" />
+      <path d="M9 3v2M5 7H3M19 13v2M21 15h-2" />
+    </>
+  ),
 };
 
 export function Icon({
   name,
   className = "h-[18px] w-[18px] shrink-0",
 }: {
-  name: IconName;
+  // Accept any string so an app can pass a nav icon the superset doesn't know
+  // yet; unknown names fall back to a neutral mark rather than rendering blank.
+  name: IconName | (string & {});
   className?: string;
 }) {
   return (
@@ -237,7 +334,7 @@ export function Icon({
       className={className}
       aria-hidden="true"
     >
-      {ICONS[name]}
+      {ICONS[name as IconName] ?? ICONS.cube}
     </svg>
   );
 }

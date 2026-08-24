@@ -7,11 +7,13 @@
 //
 // Consumers must have React (peer dep) and a Tailwind v4 build that scans this
 // package's dist (e.g. `@source "../node_modules/@kippli/common/dist/ui";`).
-export { Icon, type IconName } from './icons';
+export { Icon, PawMark, type IconName } from './icons';
 export { Menu } from './menu';
 export { AppSwitcher } from './app-switcher';
+export { UserMenu } from './user-menu';
 export { Header } from './header';
 export { Sidebar } from './sidebar';
+export { AppShell } from './app-shell';
 export type {
   SwitcherApp,
   NavItem,
