@@ -22,13 +22,18 @@
     "./http": {
       "types": "./dist/http/index.d.ts",
       "default": "./dist/http/index.js"
+    },
+    "./ui": {
+      "types": "./dist/ui/index.d.ts",
+      "default": "./dist/ui/index.js"
     }
   },
   "typesVersions": {
     "*": {
       "contracts": ["./dist/contracts/index.d.ts"],
       "nest": ["./dist/nest/index.d.ts"],
-      "http": ["./dist/http/index.d.ts"]
+      "http": ["./dist/http/index.d.ts"],
+      "ui": ["./dist/ui/index.d.ts"]
     }
   },
   "files": [
@@ -47,6 +52,7 @@
     "@nestjs/throttler": ">=6",
     "class-transformer": ">=0.5",
     "class-validator": ">=0.14",
+    "react": ">=18",
     "rxjs": ">=7"
   },
   "peerDependenciesMeta": {
@@ -54,14 +60,17 @@
     "@nestjs/throttler": { "optional": true },
     "class-transformer": { "optional": true },
     "class-validator": { "optional": true },
+    "react": { "optional": true },
     "rxjs": { "optional": true }
   },
   "devDependencies": {
     "@nestjs/common": "^11.0.0",
     "@nestjs/throttler": "^6.4.0",
     "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
+    "react": "^19.0.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "typescript": "^5.6.3"
