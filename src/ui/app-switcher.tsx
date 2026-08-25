@@ -3,6 +3,22 @@ import { Menu } from './menu';
 import type { SwitcherApp } from './types';
 
 /**
+ * Only render an app link when its URL is an absolute http(s) URL — a
+ * belt-and-suspenders guard so a legacy/malformed registry row (predating the
+ * DTO's stricter validation) can never turn a switcher tile into a
+ * `javascript:`/`data:` link in every app's header. New rows are already
+ * validated server-side; this covers whatever is already stored.
+ */
+function isSafeAppUrl(url: string): boolean {
+  try {
+    const { protocol } = new URL(url);
+    return protocol === 'http:' || protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
+
+/**
  * Google-style app-switcher grid for the shared header. Lists the enabled
  * applications the current user can open and links each out to its own URL in a
  * new tab. Cross-app links are plain <a> (they leave the current app entirely),
@@ -10,6 +26,7 @@ import type { SwitcherApp } from './types';
  * (typically fetched from the One API's `/applications/mine`).
  */
 export function AppSwitcher({ apps }: { apps: SwitcherApp[] }) {
+  const safeApps = apps.filter((app) => isSafeAppUrl(app.url));
   return (
     <Menu
       triggerLabel="App switcher"
@@ -21,11 +38,11 @@ export function AppSwitcher({ apps }: { apps: SwitcherApp[] }) {
         Applications
       </p>
 
-      {apps.length === 0 ? (
+      {safeApps.length === 0 ? (
         <p className="px-2 pb-2 pt-1 text-sm text-zinc-500">No apps yet</p>
       ) : (
         <div className="grid grid-cols-3 gap-0.5">
-          {apps.map((app) => (
+          {safeApps.map((app) => (
             <a
               key={app.slug}
               href={app.url}
@@ -44,6 +61,7 @@ export function AppSwitcher({ apps }: { apps: SwitcherApp[] }) {
                   <img
                     src={app.logoUrl}
                     alt=""
+                    loading="lazy"
                     className="size-full object-contain"
                   />
                 ) : (
